@@ -42,6 +42,7 @@ Research-with-Python-Skill/
 | API 费用 | **0.46 元** |
 | Token 消耗 | 850 万 |
 | 产出 | 2 轮实验、9 个 Python 模块、18 张图、1 个动画、6 个 CSV、8 份文档 |
+
 完整的实验报告参见 [REPORT.md](./workspace/docs/REPORT.md)
 
 ## 附录
