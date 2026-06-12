@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(PYTHONIOENCODING=utf-8 \"workspace/env/Scripts/python\" --version)",
+      "Bash(\"workspace/env/Scripts/pip\" list *)"
+    ]
+  }
+}
