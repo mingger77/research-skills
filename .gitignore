@@ -16,3 +16,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.log
+
+# 工作文件
+examples/
