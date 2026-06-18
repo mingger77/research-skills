@@ -1,52 +1,85 @@
-# Research-with-Python-Skill
+# Research-Skills
 
-顾名思义，**Research-with-Python-Skill** 是一个用于指导 Agent 利用 Python 进行科研工作的 Skill。
+一套用于指导 AI Agent 进行科研工作的结构化 Skill 系统。
 
 ## 项目背景
 
-这事说来颇具戏剧性：大一年度项目，室友选了我不感兴趣的物理课题。
-我不感兴趣，但也不想无所作为，于是决定把实验流程交给 AI 来处理。我花了几小时写了这个 Skill —— 让 Agent 按科研规范自动执行仿真、记录实验、生成报告。
+本项目的前身是 [Research-with-Python-Skill](./previous-skills/Research-with-Python-Skill.md)，一个单体式 Skill 文件。在迭代过程中，原有的单体结构难以承载日益复杂的方法论体系，因此重构为当前的多层模块化架构——将规范、约束、方法三个层面分离，使职责更清晰、扩展更灵活。
 
 ## 项目结构
 
 ```
-Research-with-Python-Skill/
-├── Research-with-Python-Skill.md  # Skill 核心正文（总纲 + 准备篇 + 实行篇）
-├── workspace/                     # 使用该 Skill 时的实际工作目录
-├── .claude/                       # Claude Code 自动生成的配置目录
-└── README.md                      # 本文件
+research-skills/
+├── skills/
+│   ├── regulation/         # 规范层：不可违背的元规则
+│   │   ├── skill-regulation.md    # Skill 调用规范
+│   │   ├── stage-regulation.md    # 状态管理规范
+│   │   ├── project-regulation.md  # 项目结构规范
+│   │   ├── action-regulation.md   # Agent 行为规范
+│   │   └── language-regulation.md # 语言表达规范
+│   ├── constraint/         # 约束层：特定场景的行为护栏
+│   │   ├── data-process-constraint.md
+│   │   ├── information-collect-constraint.md
+│   │   ├── log-write-constraint.md
+│   │   ├── plan-design-constraint.md
+│   │   ├── report-write-constraint.md
+│   │   └── result-write-constraint.md
+│   ├── method/             # 方法层：具体操作指南
+│   │   ├── data-process-method.md
+│   │   ├── information-collect-method.md
+│   │   ├── plan-design-method.md
+│   │   ├── plan-implement-method.md
+│   │   ├── python-program-method.md
+│   │   ├── result-handle-method.md
+│   │   └── temp-file-handle-method.md
+│   ├── main.md             # 顶层调度
+│   └── skill-index.md      # Skill 索引
+├── examples/               # 使用示例（不公开）
+├── previous-skills/        # 旧版 Skill（归档）
+├── public-example/         # 公开示例（预留）
+└── README.md               # 本文件
 ```
 
-## 核心内容
+## 三层架构设计
 
-1. **Research-with-Python-Skill.md**
+| 层次 | 职责 | 特点 |
+|------|------|------|
+| **规范 (Regulation)** | 定义不可违背的元规则 | 全局适用，不可绕过 |
+| **约束 (Constraint)** | 特定场景下的行为边界 | 按需加载，防止越界 |
+| **方法 (Method)** | 具体操作步骤和实现指南 | 可执行，可迭代 |
 
-   包含：
-   - **总纲**（7 条）：行为准则、停止机制、迭代上限等
-   - **准备篇**（3 大板块，11 条）：方向确定、资料整合、计划撰写
-   - **实行篇**（2 大板块，9 条）：Python 编程、结果分析与验证
+## 科研工作流
 
-   详细内容见 `Research-with-Python-Skill.md`。
+系统将科研流程定义为以下状态机，严格按照顺序流转：
 
-2. **workspace/**
+```
+INIT
+  → DIRECTION_DEFINED（方向确定）
+  → INFORMATION_COLLECTING（资料收集及整合）
+  → DATA_PROCESSING（数据处理）
+  → PLAN_DESIGNING（计划撰写）
+  → PLAN_IMPLEMENTING（计划执行）
+  → ANALYZING（结果分析与验证）
+  → COMPLETED（完成）
+```
 
-   我使用该 Skill 指导 Claude Code 进行科研工作时生成的工作目录，用于证明本 Skill 的有效性。
+- 状态只能向前流转，除非用户明确要求回退或进入失败状态
+- 每个阶段完成后向用户报告，等待确认后再推进
+- 项目元数据和阶段日志自动维护，支持中断后恢复
 
-   绝大多数内容由 Claude Code 完成，我只做了少量无关修改。
+## 核心设计原则
 
-## 成果
+1. **安全 > 效率**：所有操作以安全为首要考量
+2. **模块化**：规范、约束、方法三层分离，职责单一
+3. **状态驱动**：科研流程由状态机驱动，按序推进
+4. **可追溯**：每项结论必须标注可信度等级，可追溯到实验记录
+5. **可复现**：固定随机种子、记录参数、版本化文件管理
+6. **最小改动**：除非用户要求，否则不自动修改代码
 
-| 指标 | 数据 |
-|------|------|
-| 课题 | 橡皮筋弹性驻波仿真 |
-| API 费用 | **0.46 元** |
-| Token 消耗 | 850 万 |
-| 产出 | 2 轮实验、9 个 Python 模块、18 张图、1 个动画、6 个 CSV、8 份文档 |
+## 许可协议
 
-完整的实验报告参见 [REPORT.md](./workspace/docs/REPORT.md)
+本项目基于 MIT 协议开源，详见 [LICENSE](./LICENSE) 文件。
 
-## 附录
+## 鸣谢
 
-1. 为保护隐私，仅展示少量数据，所有涉及隐私的内容均已匿名化处理。
-2. 本 Skill 的编写离不开 `DeepSeek` 和 `ChatGPT` 的帮助。
-3. 本 Skill 为初版，尚有诸多不完善之处，敬请包涵。
+感谢  **DeepSeek** 和 **ChatGPT** 为我的 skill 体系的编写提供了宝贵的意见
