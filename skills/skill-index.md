@@ -60,6 +60,7 @@
 
    ```
    constraint/								# 行为约束（特定场景的护栏）
+   ├── data-process-constraint.md			# 用于约束数据处理
    ├── information-collect-constraint.md	# 用于约束信息收集方法
    ├── log-write-constraint.md				# 用于约束日志记录
    ├── plan-design-constraint.md			# 用于约束计划设计
